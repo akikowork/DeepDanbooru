@@ -5,6 +5,10 @@
 
 **DeepDanbooru** is anime-style girl image tag estimation system. You can estimate your images on my live demo site, [DeepDanbooru Web](http://kanotype.iptime.org:8003/deepdanbooru/).
 
+本站将其与szurubooru图库对接，自动打tag。
+
+文件见下方Tagger.py，使用时将图库地址和用户token/Cookie替换掉即可
+
 ## Requirements
 DeepDanbooru is written by Python 3.6. Following packages are need to be installed.
 - tensorflow>=2.1.0
