@@ -1,9 +1,13 @@
 import requests
 import re
 import os
-import json
+# import json
 from bs4 import BeautifulSoup
+
+session = requests.Session()
+
 def format_url(fileurl):
+        ''' "a/a/b_c" => "b" '''
 	tmpchr=""
 	tmpchrs=""
 	for chars in fileurl:
@@ -54,7 +58,7 @@ def tag_query(fileurl):
 			flag = 1
 
 	files = {'file': ('1.'+flee, fl, 'image/'+flee)}
-	r2 = requests.post(url, data={"network_type": "general"}, files=files)
+	r2 = session.post(url, data={"network_type": "general"}, files=files)
 	return format_tags(r2.text)
 
 def add_tag(fileurl):
@@ -65,20 +69,19 @@ def add_tag(fileurl):
             'Accept':'application/json',
             'Authorization':'',
             'Cookie':'',
-            'Content-Type':'application/json'
+            'Content-Type':'application/json',
 			}
 	payload = {
 			"version":0,
-			"tags":[""]
+			"tags":tag_query(fileurl),
 			}
-	payload['tags'] = tag_query(fileurl)
-	response = requests.put(url, data=json.dumps(payload), headers=headers)
+	response = session.put(url, data=payload, headers=headers)
 	print(post_id,":",response)
 
 rootdir = '/var/local/szurubooru/data/posts/'
-list = os.listdir(rootdir)
-for i in range(0,len(list)):
-	print('Processing',i+1)
-	path = os.path.join(rootdir,list[i])
-	if os.path.isfile(path):
+filelist = os.listdir(rootdir)
+for file in filelist:
+        path = os.path.join(rootdir,file)
+        if os.path.isfile(path):
+                print('Processing',file)
 		add_tag(path)
