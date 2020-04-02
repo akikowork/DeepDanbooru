@@ -8,19 +8,19 @@ session = requests.Session()
 
 def format_url(fileurl):
         ''' "a/a/b_c" => "b" '''
-	tmpchr=""
-	tmpchrs=""
-	for chars in fileurl:
-		if chars == '/':
-			tmpchr = ""
-		else:
-			tmpchr+=chars
-	for chars in tmpchr:
-		if chars != '_':
-			tmpchrs+=chars
-		else:
-			break
-	return tmpchrs
+        tmpchr=""
+        tmpchrs=""
+        for chars in fileurl:
+                if chars == '/':
+                        tmpchr = ""
+                else:
+                        tmpchr+=chars
+        for chars in tmpchr:
+                if chars != '_':
+                        tmpchrs+=chars
+                else:
+                        break
+        return tmpchrs
 
 def format_tags(html_doc):
 	soup = BeautifulSoup(html_doc,"html.parser")
@@ -84,4 +84,4 @@ for file in filelist:
         path = os.path.join(rootdir,file)
         if os.path.isfile(path):
                 print('Processing',file)
-		add_tag(path)
+                add_tag(path)
